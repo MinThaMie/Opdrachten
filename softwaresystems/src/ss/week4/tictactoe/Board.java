@@ -15,7 +15,6 @@ public class Board {
 	private static final String LINE = NUMBERING[1];
 	private static final String DELIM = "     ";
 
-
 	/**
 	 * The DIM by DIM fields of the Tic Tac Toe student. See NUMBERING for the
 	 * coding of the fields.
@@ -180,8 +179,7 @@ public class Board {
 	//@ ensures \result == this.isFull() || this.hasWinner();
 	/*@pure*/
 	public boolean gameOver() {
-		// TODO: implement, see exercise P-4.18
-		return false;
+		return (this.isFull()||this.hasWinner());
 	}
 
 	/**
@@ -218,20 +216,20 @@ public class Board {
 	 */
 	/*@ pure */
 	public boolean hasColumn(Mark m) {
-		boolean result=false;
-		int col=0;
-		
-		while (col<DIM && !result){
-			int row=0;
-			result=true;
-			while (row<DIM && result){
-				result=(getField(row,col)==m);
+		boolean result = false;
+		int col = 0;
+
+		while (col < DIM && !result) {
+			int row = 0;
+			result = true;
+			while (row < DIM && result) {
+				result = (getField(row, col) == m);
 				row++;
 			}
 			col++;
 		}
 		return result;
-		
+
 	}
 
 	/**
@@ -244,8 +242,25 @@ public class Board {
 	 */
 	/*@ pure */
 	public boolean hasDiagonal(Mark m) {
-		// TODO: implement, see exercise P-4.18
-		return false;
+		boolean hasUp = true;
+		boolean hasDown = true;
+		
+		int row = 0;
+		int col = 0;
+		while (row < DIM && col < DIM && hasDown) {
+			hasDown = (getField(row, col) == m);
+			row++;
+			col++;			
+		}
+
+		row = DIM - 1;
+		col = 0;
+		while (row >= 0 && col >= 0 && hasUp) {
+			hasUp = (getField(row, col) == m);
+			row--;
+			col++;
+		}
+		return (hasUp || hasDown);
 	}
 
 	/**
@@ -260,8 +275,7 @@ public class Board {
 	//@ ensures \result == this.hasRow(m) || this.hasColumn(m) | this.hasDiagonal(m);
 	/*@ pure */
 	public boolean isWinner(Mark m) {
-		// TODO: implement, see exercise P-4.18
-		return false;
+		return (this.hasRow(m)||this.hasColumn(m)||this.hasDiagonal(m));
 	}
 
 	/**
@@ -273,8 +287,7 @@ public class Board {
 	//@ ensures \result == isWinner(Mark.XX) | \result == isWinner(Mark.OO);
 	/*@pure*/
 	public boolean hasWinner() {
-		// TODO: implement, see exercise P-4.18
-		return false;
+		return (this.isWinner(Mark.XX)||this.isWinner(Mark.OO));
 	}
 
 	/**

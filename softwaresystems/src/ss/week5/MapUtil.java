@@ -16,11 +16,9 @@ public class MapUtil {
 		Object[] keys = map.keySet().toArray();
 
 		for (int i = 0; i < keys.length && result; i++) {
-			for (int j = i+1; j < keys.length && result; j++) {
-				
-					if (map.get(keys[i]).equals(map.get(keys[j]))) {
-						result = false;
-					
+			for (int j = i + 1; j < keys.length && result; j++) {
+				if (map.get(keys[i]).equals(map.get(keys[j]))) {
+					result = false;
 				}
 			}
 		}
@@ -35,23 +33,44 @@ public class MapUtil {
 	public static <K, V> boolean isSurjectiveOnRange(Map<K, V> map, Set<V> range) {
 		boolean result = true;
 		Object[] valuesRange = range.toArray();
-		
-		for (int i=0;i<valuesRange.length && result;i++){
+
+		for (int i = 0; i < valuesRange.length && result; i++) {
 			result = map.containsValue(valuesRange[i]);
 		}
-		
 		return result;
 	}
 
-	
+	/*@
+	ensures \forall K k; map.keySet().contains(k); \result.get(map.get(k)).contains(k);
+	*/
 	public static <K, V> Map<V, Set<K>> inverse(Map<K, V> map) {
-		// TODO: implement, see exercise P-5.3
-		return null;
+		// need Map <V set<K>> because multiple keys can map to V, so the inverse has multiple keys per value
+		Map<V, Set<K>> inverseMap = new HashMap<V, Set<K>>();
+		HashSet<K> set;
+		for (V v : map.values()) {
+			set = new HashSet<K>();
+			for (K k : map.keySet()) {
+				if (map.get(k) == v)
+					set.add(k);
+			}
+			inverseMap.put(v, set);
+		}
+		return inverseMap;
 	}
 
+	/*@
+	 requires (isOneOnOne(map) && isSurjectiveOnRange(map, (new HashSet<V>(map.values()))));
+	 ensures (\forall K k;  map.keySet().contains(k); \result.get(map.get(k)).equals(k)); 
+	 */
 	public static <K, V> Map<V, K> inverseBijection(Map<K, V> map) {
-		// TODO: implement, see exercise P-5.3
-		return null;
+		//	if (!(isOneOnOne(map) && isSurjectiveOnRange(map, (new HashSet<V>(map.values())))))
+		//	return null; //check hoeft niet vanwege preconditions toch
+
+		HashMap<V, K> inverseMap = new HashMap<V, K>();
+		for (K k : map.keySet())
+			inverseMap.put(map.get(k), k);
+		return inverseMap;
+
 	}
 
 	public static <K, V, W> boolean compatible(Map<K, V> f, Map<V, W> g) {

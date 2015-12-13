@@ -13,7 +13,7 @@ private Strategy strategy;
 	
 	public ComputerPlayer (Mark mark){
 		//ik wil hier graag NaiveStrategy.getName gebruiken maar dat kan niet omdat die niet static is, en ik kan die niet static makem omdat de interface dan gaat huilen
-		super(NaiveStrategy.getName() + "-" + mark.toString() , mark);
+		super("NaiveStrategy" + "-" + mark.toString() , mark);
 		this.strategy = new NaiveStrategy();			
 	}
 

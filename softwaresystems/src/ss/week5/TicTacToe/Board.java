@@ -1,6 +1,5 @@
 package ss.week5.TicTacToe;
 
-import java.util.ArrayList;
 
 /**
  * Game student for the Tic Tac Toe game. Module 2 lab assignment.

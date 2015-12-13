@@ -73,13 +73,31 @@ public class MapUtil {
 
 	}
 
+	/*@
+	 ensures \result==(\forall V v; f.values().contains(v); g.keySet().contains(v));
+	 */
 	public static <K, V, W> boolean compatible(Map<K, V> f, Map<V, W> g) {
-		// TODO: implement, see exercise P-5.4
-		return false;
+		boolean result = true;
+		for (V valf : f.values()){
+			if(!g.keySet().contains(valf))
+				result=false;
+			}
+		return result;
 	}
-
+	
+	/*@
+	 requires compatible(f,g);
+	 ensures (\forall K k; \result.get(k)==g.get(f.get(k)));
+	*/
 	public static <K, V, W> Map<K, W> compose(Map<K, V> f, Map<V, W> g) {
-		// TODO: implement, see exercise P-5.5
+	 if (!compatible(f,g))
 		return null;
-	}
+	 
+	Map<K, W> composition = new HashMap<K, W>();
+	
+	 for (K k : f.keySet()){
+		 composition.put(k, g.get(f.get(k)));		 
+	 }
+	 return composition;
+	}	
 }

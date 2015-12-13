@@ -16,11 +16,11 @@ public class MapUtil {
 		Object[] keys = map.keySet().toArray();
 
 		for (int i = 0; i < keys.length && result; i++) {
-			for (int j = 0; j < keys.length && result; j++) {
-				if (i != j) {
+			for (int j = i+1; j < keys.length && result; j++) {
+				
 					if (map.get(keys[i]).equals(map.get(keys[j]))) {
 						result = false;
-					}
+					
 				}
 			}
 		}
@@ -43,6 +43,7 @@ public class MapUtil {
 		return result;
 	}
 
+	
 	public static <K, V> Map<V, Set<K>> inverse(Map<K, V> map) {
 		// TODO: implement, see exercise P-5.3
 		return null;

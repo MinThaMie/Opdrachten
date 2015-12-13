@@ -29,6 +29,7 @@ public class SmartStrategy implements Strategy {
 			List<Integer> emptyFields = emptyFields(b);
 			result = (int) emptyFields.get((int) Math.floor(Math.random() * (emptyFields.size())));
 		}
+		return result;
 
 	}
 
@@ -38,30 +39,33 @@ public class SmartStrategy implements Strategy {
 
 	private boolean hasDirectWin(Board b, Mark m) {
 		boolean hasWin = false;
-		Mark oldMark;
+
 		for (int i = 0; i < (Board.DIM * Board.DIM); i++) {
-			oldMark = b.getField(i);
-			b.setField(i, m);
-			if (b.isWinner(m)) {
-				hasWin = true;
-				break;
+			if (b.isEmptyField(i)) {
+				b.setField(i, m);
+				if (b.isWinner(m)) {
+					hasWin = true;
+					break;
+				}
+				b.setField(i, Mark.EMPTY);
 			}
-			b.setField(i, oldMark);
+
 		}
 		return hasWin;
 	}
 
 	private int isDirectWin(Board b, Mark m) {
 		int isWin = 0;
-		Mark oldMark;
+
 		for (int i = 0; i < (Board.DIM * Board.DIM); i++) {
-			oldMark = b.getField(i);
-			b.setField(i, m);
-			if (b.isWinner(m)) {
-				isWin = i;
-				break;
+			if (b.isEmptyField(i)) {
+				b.setField(i, m);
+				if (b.isWinner(m)) {
+					isWin = i;
+					break;
+				}
+				b.setField(i, Mark.EMPTY);
 			}
-			b.setField(i, oldMark);
 		}
 		return isWin;
 

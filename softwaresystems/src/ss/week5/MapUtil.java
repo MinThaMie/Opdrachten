@@ -14,7 +14,7 @@ public class MapUtil {
 	public static <K, V> boolean isOneOnOne(Map<K, V> map) {
 		boolean result = true;
 		Object[] keys = map.keySet().toArray();
-		
+
 		for (int i = 0; i < keys.length && result; i++) {
 			for (int j = 0; j < keys.length && result; j++) {
 				if (i != j) {
@@ -28,10 +28,19 @@ public class MapUtil {
 		return result;
 	}
 
-	
+	/*@
+	ensures \result == (\forall V v; range.contains(v);
+	 						\exists K k;  map.get(k).equals(v));
+	*/
 	public static <K, V> boolean isSurjectiveOnRange(Map<K, V> map, Set<V> range) {
-		// TODO: implement, see exercise P-5.2
-		return false;
+		boolean result = true;
+		Object[] valuesRange = range.toArray();
+		
+		for (int i=0;i<valuesRange.length && result;i++){
+			result = map.containsValue(valuesRange[i]);
+		}
+		
+		return result;
 	}
 
 	public static <K, V> Map<V, Set<K>> inverse(Map<K, V> map) {

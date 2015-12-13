@@ -5,8 +5,7 @@ import org.junit.Test;
 import ss.week2.Rectangle;
 
 //import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
+
 import static org.junit.Assert.assertEquals;
 
 /**

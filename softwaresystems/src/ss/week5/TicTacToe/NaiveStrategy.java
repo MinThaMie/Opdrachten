@@ -1,10 +1,13 @@
 package ss.week5.TicTacToe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class NaiveStrategy implements Strategy {
-private final String NAME = "Naive";
+private final static String NAME = "Naive";
+
+public NaiveStrategy(){}
 
 	@Override
 	public String getName() {
@@ -13,19 +16,20 @@ private final String NAME = "Naive";
 
 	@Override
 	public int determineMove(Board b, Mark m) {
-		String possibleFields = emptyFields(b);
-		int numField=(int) Math.floor( Math.random()*(possibleFields.length()))+1;
-		return possibleFields.charAt(numField);
+		List<Integer> emptyFields=emptyFields(b);
+		return (int) emptyFields.get((int) Math.floor(Math.random()*(emptyFields.size())));
 	}
 	
-	private static String emptyFields(Board b){
-		String result="";
-		for (int i=0;i<(Board.DIM*Board.DIM);i++){
-			if (b.isField(i) && b.isEmptyField(i))
-				result= result +((Integer) i).toString();
-		}
-		return result;
-		
+	private static List<Integer> emptyFields(Board b){
+		List<Integer> emptyFields = new ArrayList<Integer>();
+		int j=0;
+		for (int i=0; i<(Board.DIM*Board.DIM);i++){
+			if (b.isEmptyField(i)){
+				emptyFields.add(j,i);
+				j++;
+			}
+		}		
+		return emptyFields;		
 	}
 	
 }

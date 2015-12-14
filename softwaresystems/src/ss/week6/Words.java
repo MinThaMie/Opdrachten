@@ -1,40 +1,44 @@
 package ss.week6;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class Words {
 
-	private static String[] words;
-	private static Scanner in;
-
 	public static void main(String[] args) {
-		in = new Scanner(System.in);
-		System.out.println("input text");
-		words = read();
-
-		write(words);
-	}
-
-	private static String[] read() {
-		String[] result = null;
-		;
-		int i = 0;
-		boolean go = true;
+		Scanner scanner = new Scanner(System.in);
+		ArrayList<String> words;
+		boolean stop;
 		do {
-			if (in.hasNext()) {
-				words[i] = in.next();
-				i++;
-			} else
-				go = false;
-		} while (go);
+			System.out.println("Enter sentence end with <.> ");
+			words = read(scanner);
 
-		return result;
+			stop = write(words);
+		} while (!stop);
+
 	}
 
-	public static void write(String[] words){
-		for (String word : words){
-			System.out.println(word);
+	private static ArrayList<String> read(Scanner in) {
+		ArrayList<String> words = new ArrayList<String>();
+		int i = 0;
+		while (in.hasNext()) {
+			words.add(in.next());
+			if (words.get(i).contains("."))
+				break;
+			i++;
 		}
+		return words;
+	}
+
+	private static boolean write(ArrayList<String> words) {
+		boolean stop = false;
+		if (words.get(0).equals("end")){
+			stop = true;
+		words.remove(0);}
+		for (int i = 0; i < words.size(); i++) {
+			System.out.println("Word " + (i+1) +": " + words.get(i));
+		}
+		return stop;
+
 	}
 
 }

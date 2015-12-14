@@ -27,25 +27,42 @@ public class LinkedList<Element> {
 	//@ ensures this.size == \old(size) - 1;
 	public void remove(Element element) {
 		if (element == get(0)) {
-			first=first.next;
+			first = first.next;
 		} else {
 			Node p = findBefore(element);
-			p.next=p.next.next;
+			p.next = p.next.next;
 		}
 		size--;
 	}
-///kan sneller
+	///kan sneller   
+	/*	public Node findBefore(Element element) {
+			int index = 0;
+			Node result;
+			while (get(index) != element && index < this.size) {
+				index++;
+			}
+			if (index == 0)
+				result = null;
+			else
+				result = getNode(index - 1);
+			return result;
+		}*/
+
 	public Node findBefore(Element element) {
-		int index = 0;
-		Node result;
-		while (get(index) != element && index < this.size) {
-			index++;
+		Node p = first;
+		int count = 0;
+
+		while (count < (size - 2)) {
+			if (p.next.element.equals(element))
+				break;
+			else {
+				p = p.next;
+				count++;
+			}
 		}
-		if (index == 0)
-			result = null;
-		else
-			result = getNode(index - 1);
-		return result;
+		if (p.next.element != element)
+			p = null;
+		return p;
 	}
 
 	//@ requires 0 <= index && index < this.size();

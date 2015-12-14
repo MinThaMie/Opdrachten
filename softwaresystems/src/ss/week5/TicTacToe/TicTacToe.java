@@ -28,7 +28,7 @@ public class TicTacToe {
 		if (args[1].equals(NAIVEPC)) {
 			player2 = new ComputerPlayer(Mark.XX, new NaiveStrategy());
 		} else if (args[1].equals(SMARTPC)) {
-			player2 = new ComputerPlayer(Mark.XX, new SmartStrategy());
+			player2= new ComputerPlayer(Mark.XX, new SmartStrategy());
 		} else {
 			player2 = new HumanPlayer(args[1], Mark.XX);
 		}

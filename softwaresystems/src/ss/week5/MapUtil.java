@@ -43,7 +43,7 @@ public class MapUtil {
 	/*@
 	ensures \forall K k; map.keySet().contains(k); \result.get(map.get(k)).contains(k);
 	*/
-	public static <K, V> Map<V, Set<K>> inverse(Map<K, V> map) {
+	/* public static <K, V> Map<V, Set<K>> inverse(Map<K, V> map) {
 		// need Map <V set<K>> because multiple keys can map to V, so the inverse has multiple keys per value
 		Map<V, Set<K>> inverseMap = new HashMap<V, Set<K>>();
 		HashSet<K> set;
@@ -56,6 +56,42 @@ public class MapUtil {
 			inverseMap.put(v, set);
 		}
 		return inverseMap;
+	}
+	*/
+
+/*	public static <K, V> Map<V, Set<K>> inverse(Map<K, V> map) {
+		// need Map <V set<K>> because multiple keys can map to V, so the inverse has multiple keys per value
+		Map<V, Set<K>> inverseMap = new HashMap<V, Set<K>>();
+		HashSet<K> set = null;
+		for (V v : map.values()) {
+			for (K k : map.keySet()) {
+				if (inverseMap.keySet().contains(v) && map.get(k).equals(v)) {
+					inverseMap.get(v).add(k);
+				} else {
+					set = new HashSet<K>();
+					if (map.get(k).equals(v)) {
+						set.add(k);
+						inverseMap.put(v, set);
+					}
+				}
+			}
+
+		}
+		return inverseMap;
+	}*/
+	public static <K, V> Map<V, Set<K>> inverse(Map<K, V> map) {
+		HashMap <V, Set<K>> inverseMap = new HashMap<V, Set<K>>();//create empty map
+		
+		for (V v : map.values()){ //create key with empty set for every unique value in map
+			if (!inverseMap.containsKey(v)){
+				inverseMap.put(v, new HashSet<K>());
+			}
+		}
+		for (K k : map.keySet()){
+			if (inverseMap.get(map.get(k))!=null)// ad key from map to key in inversemap
+			inverseMap.get(map.get(k)).add(k);			
+		}
+		return inverseMap;	
 	}
 
 	/*@
@@ -78,27 +114,26 @@ public class MapUtil {
 	 */
 	public static <K, V, W> boolean compatible(Map<K, V> f, Map<V, W> g) {
 		boolean result = true;
-		for (V valf : f.values()){
-			if(!g.keySet().contains(valf))
-				result=false;
-			}
+		for (V valf : f.values()) {
+			if (!g.keySet().contains(valf))
+				result = false;
+		}
 		return result;
 	}
-	
+
 	/*@
 	 requires compatible(f,g);
 	 ensures (\forall K k; \result.get(k)==g.get(f.get(k)));
 	*/
 	public static <K, V, W> Map<K, W> compose(Map<K, V> f, Map<V, W> g) {
-	 if (!compatible(f,g))
-		return null;
-	 
-	Map<K, W> composition = new HashMap<K, W>();
-	
-	 for (K k : f.keySet()){
-		 composition.put(k, g.get(f.get(k)));		 
-	 }
-	 return composition;
-	}	
+		if (!compatible(f, g))
+			return null;
+
+		Map<K, W> composition = new HashMap<K, W>();
+
+		for (K k : f.keySet()) {
+			composition.put(k, g.get(f.get(k)));
+		}
+		return composition;
+	}
 }
-//sneller

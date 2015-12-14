@@ -25,13 +25,11 @@ public class Hello {
 		do {
 			if (scanner.hasNext()) {
 				name = scanner.next();
-			}else if (!scanner.hasNext())
+			} 
+			if (name.equals("end"))
 				go=false;
-			
-			//if (name.equals("end"))
-			//	go = false;
-		//	else
-				System.out.println("Hello " + name);
+			else
+			System.out.println("Hello " + name);
 		} while (go);
 
 	}

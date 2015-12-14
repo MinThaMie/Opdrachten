@@ -95,9 +95,9 @@ public class Game {
         String answer;
         do {
             System.out.print(prompt);
-            try (Scanner in = new Scanner(System.in)) {
+            Scanner in = new Scanner(System.in);
                 answer = in.hasNextLine() ? in.nextLine() : null;
-            }
+          //  }
         } while (answer == null || (!answer.equals(yes) && !answer.equals(no)));
         return answer.equals(yes);
     }

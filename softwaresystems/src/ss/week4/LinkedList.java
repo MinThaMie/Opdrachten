@@ -34,7 +34,7 @@ public class LinkedList<Element> {
 		}
 		size--;
 	}
-
+///kan sneller
 	public Node findBefore(Element element) {
 		int index = 0;
 		Node result;

@@ -50,7 +50,7 @@ public class MapUtil {
 		for (V v : map.values()) {
 			set = new HashSet<K>();
 			for (K k : map.keySet()) {
-				if (map.get(k) == v)
+				if (map.get(k).equals(v))
 					set.add(k);
 			}
 			inverseMap.put(v, set);
@@ -101,3 +101,4 @@ public class MapUtil {
 	 return composition;
 	}	
 }
+//sneller

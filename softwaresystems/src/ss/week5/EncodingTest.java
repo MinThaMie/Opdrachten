@@ -28,7 +28,7 @@ public class EncodingTest {
     	 
     		  System.out.print(hexCharArray[i] + "" +hexCharArray[i+1] + "   ");
     	  System.out.print(text.substring(i/2,i/2+1)+"   ");
-    	  System.out.print(text.substring(i/2,i/2+1).getBytes()+"   ");
+    	  System.out.print(text.substring(i/2,i/2+1).getBytes()[0]+"   ");
     	  
     	  System.out.println("");
       }
@@ -43,6 +43,17 @@ public class EncodingTest {
       String decodedString = new String(Base64.decodeBase64(base64String));
       System.out.println("Base64 String decoded = "+ decodedString);
       
-        
+        input = "a";
+        System.out.println("Base64 representation= "+ Base64.encodeBase64String(input.getBytes()));
+        input = "aa";
+        System.out.println("Base64 representation= "+ Base64.encodeBase64String(input.getBytes()));
+        input = "aaa";
+        System.out.println("Base64 representation= "+ Base64.encodeBase64String(input.getBytes()));
+        input = "aaaa";
+        System.out.println("Base64 representation= "+ Base64.encodeBase64String(input.getBytes()));
+        input = "aaaaa";
+        System.out.println("Base64 representation= "+ Base64.encodeBase64String(input.getBytes()));
+        input = "aaaaaaa";
+        System.out.println("Base64 representation= "+ Base64.encodeBase64String(input.getBytes()));
     }
 }

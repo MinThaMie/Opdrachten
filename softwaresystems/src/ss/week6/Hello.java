@@ -3,32 +3,37 @@ package ss.week6;
 import java.util.*;
 
 public class Hello {
-	private static String name;
+
 	private static Scanner scanner;
+	private static boolean go;
 
 	public static void main(String[] args) {
-		
-		name=" ";
+
 		scanner = new Scanner(System.in);
-		
-		while(name!=null){
-		read(scanner);
-		write();
-		}
+		go = true;
+
+		do {
+			read(scanner);
+		} while (go);
+
 	}
 
 	//-----------------------------Commands
 	private static void read(Scanner scanner) {
+		String name = "";
+		System.out.println("Enter name"); // waarom komt dit er niet oneindig vaak uit?
 		do {
-			System.out.println("Enter name"); // waarom komt dit er niet oneindig vaak uit?
 			if (scanner.hasNext()) {
 				name = scanner.next();
-			}
-		} while (name == null);
-		
+			}else if (!scanner.hasNext())
+				go=false;
+			
+			//if (name.equals("end"))
+			//	go = false;
+		//	else
+				System.out.println("Hello " + name);
+		} while (go);
+
 	}
 
-	private static void write() {
-		System.out.println("Hello " + name);
-	}
 }

@@ -11,22 +11,22 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class MergeSortTest {
- /* @Test
+  @Test
     public void testMergesortEmptyList() {
         List<Integer> sequence = new ArrayList<>(Collections.emptyList());
         MergeSort.mergesort(sequence);
         assertEquals(sequence, Collections.emptyList());
-    }*/
+    }
 
-  /*  @Test
+    @Test
     public void testMergesortSingleItem() {
         List<Integer> sequence = new ArrayList<>(Arrays.asList(1));
         MergeSort.mergesort(sequence);
        
         assertEquals(sequence, Arrays.asList(1));
-    }*/
+    }
 
-    /*@Test
+    @Test
     public void testMergesortSortedList() {
         List<Integer> sequence = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
         MergeSort.mergesort(sequence);
@@ -36,7 +36,7 @@ public class MergeSortTest {
         sequence = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6));
         MergeSort.mergesort(sequence);
         assertEquals(sequence, Arrays.asList(1, 2, 3, 4, 5, 6));
-    }*/
+    }
 
     @Test
     public void testMergesortUnsortedList() {

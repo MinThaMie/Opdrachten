@@ -58,7 +58,7 @@ public class Board {
 	//@ requires 0 <= row & row < DIM;
 	//@ requires 0 <= col & col < DIM;
 	/*@pure*/
-	public int index(int row, int col) {
+	public static int index(int row, int col) {
 		return (row * DIM + col);
 	}
 
@@ -69,7 +69,7 @@ public class Board {
 	 */
 	//@ ensures \result == (0 <= index && index < DIM * DIM);
 	/*@pure*/
-	public boolean isField(int index) {
+	public static boolean isField(int index) {
 		boolean result;
 		if (0 <= index && index < DIM * DIM)
 			result = true;
@@ -86,8 +86,8 @@ public class Board {
 	 */
 	//@ ensures \result == (0 <= row && row < DIM && 0 <= col && col < DIM);
 	/*@pure*/
-	public boolean isField(int row, int col) {
-		return isField(index(row, col));
+	public static boolean isField(int row, int col) {
+		return (0 <= row && row < DIM && 0 <= col && col < DIM);
 	}
 
 	/**

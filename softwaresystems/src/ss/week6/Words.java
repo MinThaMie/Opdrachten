@@ -1,6 +1,7 @@
 package ss.week6;
 
-import java.util.*;
+import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Words {
 
@@ -22,7 +23,7 @@ public class Words {
 		int i = 0;
 		while (in.hasNext()) {
 			words.add(in.next());
-			if (words.get(i).contains("."))
+			if (words.get(i).contains(".")||words.get(i).contains("!"))
 				break;
 			i++;
 		}

@@ -47,7 +47,7 @@ public class CardTest {
     }
 
     /** Test for writing and reading a card with data files.*/
-    @Test
+   @Test
     public void testReadingWritingData() {
         try {
             DataOutputStream dataOut = new DataOutputStream(new FileOutputStream(PATH + "card.dat"));
@@ -64,6 +64,7 @@ public class CardTest {
         }
     }
 
+ 
     /** Test for writing and reading a card with object files.*/
     @Test
     public void testReadingWritingObject() {

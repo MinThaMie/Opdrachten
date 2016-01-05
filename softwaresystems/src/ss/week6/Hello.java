@@ -21,7 +21,7 @@ public class Hello {
 	//-----------------------------Commands
 	private static void read(Scanner scanner) {
 		String name = "";
-		System.out.println("Enter name"); // waarom komt dit er niet oneindig vaak uit?
+		System.out.println("Enter name"); 
 		do {
 			if (scanner.hasNext()) {
 				name = scanner.next();

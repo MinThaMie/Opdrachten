@@ -206,13 +206,13 @@ public class Card implements Serializable {
 		return result;
 	}
 
-	// text channel read
+	// text channel write
 	public void write(PrintWriter print) {
 		print.println(this.toString());
 		print.flush();
 	}
 
-	// text channel write
+	// text channel read
 	public static Card read(BufferedReader in) throws EOFException {
 		Card result = null;
 		String line = "";
@@ -269,29 +269,22 @@ public class Card implements Serializable {
 	}
 
 	// object channel read
-	public static Card read(ObjectInput in) throws EOFException {
-		Card result = null;
-		String line = "";
-
+	public static Card read(ObjectInput in) {
+		Card result=null;
+		Object objectRead=null;
+		
 		try {
-			line = in.readLine();
+			 objectRead = in.readObject();
 		} catch (IOException e) {
-			System.out.println("Read error" + e.getStackTrace());
-			return result;
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
 		
-		if (line == null) {
-			throw new EOFException();
+		if (objectRead instanceof Card){
+			result = (Card) objectRead;
 		}
-		Scanner scan = new Scanner(line);
-		String suit = scan.next();
-		String rank = scan.next();
-		scan.close();
-
-		if (isValidSuit(suitString2Char(suit)) && isValidRank(rankString2Char(rank))) {
-			result = new Card(suitString2Char(suit), rankString2Char(rank));
-		}
-
+			
 		return result;
 
 	}

@@ -39,7 +39,6 @@ public class DictionaryAttack {
 			e.printStackTrace();
 		}
 
-	
 		while (go) {
 			String line = null;
 			try {
@@ -48,12 +47,11 @@ public class DictionaryAttack {
 				System.out.println(e.getMessage());
 			}
 			if (line == null) {
-				go=false;
-			}else{
-
-			String[] splitLine = line.split(": ");
-
-			passwordMap.put(splitLine[0], splitLine[1]);}
+				go = false;
+			} else {
+				String[] splitLine = line.split(": ");
+				passwordMap.put(splitLine[0], splitLine[1]);
+			}
 		}
 
 	}
@@ -88,7 +86,6 @@ public class DictionaryAttack {
 	 */
 	public boolean checkPassword(String user, String password) {
 		String hashedPass = getPasswordHash(password);
-
 		return hashedPass.equals(passwordMap.get(user));
 	}
 
@@ -105,7 +102,7 @@ public class DictionaryAttack {
 		BufferedReader reader = null;
 		hashDictionary = new HashMap<String, String>();
 		boolean go = true;
-		
+
 		try {
 			reader = new BufferedReader(new FileReader(filename));
 		} catch (FileNotFoundException e) {
@@ -119,8 +116,7 @@ public class DictionaryAttack {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
-			
+
 			if (commonPass == null) {
 				go = false;
 			} else {
@@ -134,20 +130,20 @@ public class DictionaryAttack {
 	 * Do the dictionary attack.
 	 */
 	public void doDictionaryAttack() {
-		
+
 		try {
-			readPasswords(PATH +"LeakedPasswords.txt");
+			readPasswords(PATH + "LeakedPasswords.txt");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		addToHashDictionary(PATH +"CommonPasswords.txt");
-	
-		for (Map.Entry<String, String> entry : passwordMap.entrySet()){
-		if(	hashDictionary.containsKey(entry.getValue())){
-			System.out.println(entry.getKey() + ": " + hashDictionary.get(entry.getValue()));
-		}
+
+		addToHashDictionary(PATH + "CommonPasswords.txt");
+
+		for (Map.Entry<String, String> entry : passwordMap.entrySet()) {
+			if (hashDictionary.containsKey(entry.getValue())) {
+				System.out.println(entry.getKey() + ": " + hashDictionary.get(entry.getValue()));
+			}
 		}
 	}
 

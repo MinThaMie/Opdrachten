@@ -119,7 +119,6 @@ class MandelPanel extends JPanel implements Runnable
 
 	@Override
 	public void run() {
-		drawMandel();
-		
+		drawMandel();		
 	}
 }

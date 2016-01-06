@@ -25,6 +25,7 @@ public class IntConsumer extends Thread {
 
 			val = cell.getValue();
 			System.out.println(getName() + ": " + val + " read");
+			System.out.flush();
 		} while (val != -1);
 
 		System.out.println(getName() + ": end");

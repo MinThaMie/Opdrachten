@@ -7,22 +7,28 @@ import java.util.List;
 import java.util.ListIterator;
 
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 /**
- * BallPanel a special JPanel for drawing balls on.
- * Used with TimedBouncer.
+ * BallPanel a special JPanel for drawing balls on. Used with TimedBouncer.
+ * 
  * @version 2005.02.22
  */
 public class BallPanel extends JPanel implements ActionListener {
 	private List<Ball> balls; // @invariant balls != null
+	
+	Timer timer;
 
 	public BallPanel() {
 		balls = new java.util.ArrayList<Ball>();
+		timer = new Timer(2,this);
+		timer.start();
+	//	(new AnimateThread()).start();
 	}
 
 	/**
-	 * Implements the method from the interface ActionListener
-	 * Move and repaint the balls
+	 * Implements the method from the interface ActionListener Move and repaint
+	 * the balls
 	 */
 	public void actionPerformed(ActionEvent evt) {
 		moveBalls();
@@ -41,14 +47,16 @@ public class BallPanel extends JPanel implements ActionListener {
 		}
 	}
 
-	/** Add a new ball to the ball list and start the timer if not yet running. */
+	/**
+	 * Add a new ball to the ball list and start the timer if not yet running.
+	 */
 	public synchronized void addNewBall() {
 		balls.add(new Ball(this));
 	}
 
 	/**
-	 * Move all balls 
-	 * BEWARE: collision effects are not respecting Snellius' law. 
+	 * Move all balls BEWARE: collision effects are not respecting Snellius'
+	 * law.
 	 */
 	public synchronized void moveBalls() {
 		for (Ball b : balls) {
@@ -68,14 +76,19 @@ public class BallPanel extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * Overrides paintComponent in JPanel.
-	 * Is called if repaint is called.
+	 * Overrides paintComponent in JPanel. Is called if repaint is called.
 	 * Paints all elements of balls.
 	 */
 	public synchronized void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		for (Ball b : balls) {
 			b.draw(g);
+		}
+	}
+
+	private class AnimateThread extends Thread {
+		public void run() {
+			animate();
 		}
 	}
 }

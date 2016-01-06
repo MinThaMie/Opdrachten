@@ -25,7 +25,7 @@ public class SyncConsole {
      * write a text on the default output
      * @param text text to be written
      */
-    static public synchronized void print(String text) {
+    static public void print(String text) {
         out.print(text);
     }
 
@@ -33,7 +33,7 @@ public class SyncConsole {
      * write a text on the default output, ending with a new line
      * @param text text to be written
      */
-    static public synchronized void println(String text) {
+    static public void println(String text) {
         out.println(text);
     }
 
@@ -42,7 +42,7 @@ public class SyncConsole {
      * @param  text question
      * @return read text (never null)
      */
-    static public synchronized String readString(String text) {
+    static public String readString(String text) {
         print(text);
         String antw = null;
         try {
@@ -74,7 +74,7 @@ public class SyncConsole {
      * @param errorMessage error message for wrong input
      * @return number
      */
-    static public synchronized int readInt(String text, String errorMessage) {
+    static public int readInt(String text, String errorMessage) {
         do {
             String ans = readString(text);
             try {

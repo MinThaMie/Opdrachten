@@ -19,7 +19,7 @@ public class TestSyncConsole extends Thread {
 		
 
 	//-----------------------------Commands
-private void sum(){
+private synchronized void sum(){
 int number1 = SyncConsole.readInt( "Thread: " + this.getName() +" input integer 1 ");
 int number2 = SyncConsole.readInt("Thread: " + this.getName() + " input integer 2 ");
 

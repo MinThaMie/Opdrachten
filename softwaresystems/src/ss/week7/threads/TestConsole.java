@@ -20,7 +20,7 @@ public class TestConsole extends Thread {
 
 	//-----------------------------Commands
 private void sum(){
-int number1 = Console.readInt( "Thread: " + this.getName() +"input integer 1 ");
+int number1 = Console.readInt( "Thread: " + this.getName() +" input integer 1 ");
 int number2 = Console.readInt("Thread: " + this.getName() + " input integer 2 ");
 
 Console.println(number1 + " + " + number2 + " = " + (number1+number2));

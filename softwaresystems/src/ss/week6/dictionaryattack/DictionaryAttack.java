@@ -5,13 +5,19 @@ import java.io.EOFException;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.*;
+
 public class DictionaryAttack {
 	private Map<String, String> passwordMap;
 	private Map<String, String> hashDictionary;
+	private final String PATH = "D:\\SS Home\\BB\\ss\\week6\\test\\";
 
 	/**
 	 * Reads a password file. Each line of the password file has the form:
@@ -30,11 +36,10 @@ public class DictionaryAttack {
 		try {
 			reader = new BufferedReader(new FileReader(filename));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		Scanner lineScanner = null;
+	
 		while (go) {
 			String line = null;
 			try {
@@ -43,26 +48,14 @@ public class DictionaryAttack {
 				System.out.println(e.getMessage());
 			}
 			if (line == null) {
-				break;
-			}
-			lineScanner = new Scanner(line);
+				go=false;
+			}else{
 
-			String name = lineScanner.next();
-			String hash = lineScanner.next();
+			String[] splitLine = line.split(": ");
 
-			if (hash == null) {
-				System.out.println("hash is null");
-			}
-			if (name == null) {
-				System.out.println("name is null");
-			}
-			passwordMap.put(name, hash);
+			passwordMap.put(splitLine[0], splitLine[1]);}
 		}
 
-		for (Map.Entry<String, String> entry : passwordMap.entrySet()) {
-			System.out.println(passwordMap.get(entry.getKey()));
-		}
-		lineScanner.close();
 	}
 
 	/**
@@ -73,8 +66,16 @@ public class DictionaryAttack {
 	 * @return
 	 */
 	public String getPasswordHash(String password) {
-		// To implement
-		return null;
+		byte[] inputdata = password.getBytes();
+		MessageDigest md = null;
+		try {
+			md = MessageDigest.getInstance("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			System.err.println(e.getMessage());
+		}
+		md.update(inputdata);
+		byte[] digest = md.digest();
+		return Hex.encodeHexString(digest);
 	}
 
 	/**
@@ -86,8 +87,9 @@ public class DictionaryAttack {
 	 * @return whether the password for that user was correct.
 	 */
 	public boolean checkPassword(String user, String password) {
-		// To implement
-		return false;
+		String hashedPass = getPasswordHash(password);
+
+		return hashedPass.equals(passwordMap.get(user));
 	}
 
 	/**
@@ -99,14 +101,54 @@ public class DictionaryAttack {
 	 *            filename of the dictionary.
 	 */
 	public void addToHashDictionary(String filename) {
-		// To implement        
+
+		BufferedReader reader = null;
+		hashDictionary = new HashMap<String, String>();
+		boolean go = true;
+		
+		try {
+			reader = new BufferedReader(new FileReader(filename));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		while (go) {
+			String commonPass = null;
+			try {
+				commonPass = reader.readLine();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			
+			if (commonPass == null) {
+				go = false;
+			} else {
+				String hashedPass = getPasswordHash(commonPass);
+				hashDictionary.put(hashedPass, commonPass);
+			}
+		}
 	}
 
 	/**
 	 * Do the dictionary attack.
 	 */
 	public void doDictionaryAttack() {
-		// To implement
+		
+		try {
+			readPasswords(PATH +"LeakedPasswords.txt");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		addToHashDictionary(PATH +"CommonPasswords.txt");
+	
+		for (Map.Entry<String, String> entry : passwordMap.entrySet()){
+		if(	hashDictionary.containsKey(entry.getValue())){
+			System.out.println(entry.getKey() + ": " + hashDictionary.get(entry.getValue()));
+		}
+		}
 	}
 
 	public static void main(String[] args) {

@@ -44,7 +44,6 @@ public class FinegrainedIntCell implements IntCell {
 			l.unlock();			
 		}
 		//System.out.println(System.currentTimeMillis());
-		return this.value;
-		
+		return this.value;		
 	}
 }

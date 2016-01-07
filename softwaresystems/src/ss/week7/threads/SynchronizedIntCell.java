@@ -14,24 +14,26 @@ public class SynchronizedIntCell implements IntCell {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		unconsumed=true;
+		}		
 		this.value = val;
 		notify();
+		unconsumed=true;
 	}
 
 	@Override
-	public synchronized int getValue() {		
+	public synchronized int getValue() {	
+		int result;
 		while (!unconsumed) {
 			try {
 				wait();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}	
+		result=this.value;
 		unconsumed=false;
 		notify();
-		return this.value;
+		
+		return result;
 	}
 }

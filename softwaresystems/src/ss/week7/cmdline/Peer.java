@@ -90,6 +90,7 @@ public class Peer implements Runnable {
 			in.close();
 			out.close();
 			this.sock.close();
+			System.exit(0);
 
 		} catch (IOException e) {
 			e.printStackTrace();

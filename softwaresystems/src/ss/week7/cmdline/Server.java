@@ -54,16 +54,11 @@ public class Server {
              server.handleTerminalInput();
              server.shutDown();
              serverSock.close();
+             clientsocket.close();
          } catch (IOException e) {
              e.printStackTrace();
-         }
-    
-    	 /*try{
-    		 serverSock.accept();
-    	 }catch(IOException e){
-    		 e.getMessage();
-    	 }*/
-    	 
+         } 
+    	 System.exit(0);
     }
 
 } // end of class Server

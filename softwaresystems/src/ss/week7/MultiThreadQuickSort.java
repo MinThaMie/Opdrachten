@@ -1,15 +1,20 @@
 package ss.week7;
 
 
-public class MultiThreadQuickSort{
+public class MultiThreadQuickSort extends Thread{
+
 	
     public static void qsort(int[] a) {
         qsort(a, 0, a.length - 1);        
     }
+    
+    @Override
+    public void run(){}
+    
     public static void qsort(int[] a, int first, int last) {
         if (first < last) {
             int position = partition(a, first, last);
-            qsort(a, first, position - 1);
+           qsort(a, first, position - 1);
             qsort(a, position + 1, last);
         }
     }
@@ -35,6 +40,5 @@ public class MultiThreadQuickSort{
         a[i] = a[j];
         a[j] = tmp;
     }
-	
 
 }

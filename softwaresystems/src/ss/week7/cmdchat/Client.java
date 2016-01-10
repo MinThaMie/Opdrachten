@@ -95,7 +95,6 @@ public class Client extends Thread{
 		try {
 			out.write(msg);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

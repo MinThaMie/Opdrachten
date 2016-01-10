@@ -57,12 +57,12 @@ public class Server {
 
 				Socket sock = servSock.accept();
 				System.out.println("connected to new client");
-				BufferedWriter out = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+				//BufferedWriter out = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
 
 				ClientHandler clientHandler = new ClientHandler(this, sock);
-				out.write("naampje");
-				out.newLine();
-					clientHandler.announce();
+				//out.write("naampje");
+				//out.newLine();
+				clientHandler.announce();
 				Thread clientHandlerThread = new Thread(clientHandler);
 
 				clientHandlerThread.start();
@@ -87,6 +87,7 @@ public class Server {
 	 *            message that is send
 	 */
 	public void broadcast(String msg) {
+		System.out.println(msg);
 		for (ClientHandler client : threads) {
 			client.sendMessage(msg);
 		}
@@ -111,5 +112,6 @@ public class Server {
 	 */
 	public void removeHandler(ClientHandler handler) {
 		threads.remove(handler);
+		System.out.println("handler added removed");
 	}
 }

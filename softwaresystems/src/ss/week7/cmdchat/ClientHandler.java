@@ -18,6 +18,7 @@ public class ClientHandler extends Thread {
 	private BufferedReader in;
 	private BufferedWriter out;
 	private String clientName;
+	private boolean connected;
 
 	/**
 	 * Constructs a ClientHandler object Initialises both Data streams.
@@ -27,6 +28,7 @@ public class ClientHandler extends Thread {
 		this.server = serverArg;
 		this.in = new BufferedReader(new InputStreamReader(sockArg.getInputStream()));
 		this.out = new BufferedWriter(new OutputStreamWriter(sockArg.getOutputStream()));
+		this.connected=true;
 	}
 
 	/**
@@ -49,7 +51,7 @@ public class ClientHandler extends Thread {
 	 */
 	public void run() {
 		String text = "";
-		while (true) {
+		while (connected) {
 			try {
 				text = in.readLine();
 				server.broadcast(clientName + text);
@@ -69,6 +71,8 @@ public class ClientHandler extends Thread {
 	public void sendMessage(String msg) {
 		try {
 			out.write(msg);
+			out.newLine();
+			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 			shutdown();
@@ -83,5 +87,6 @@ public class ClientHandler extends Thread {
 	private void shutdown() {
 		server.removeHandler(this);
 		server.broadcast("[" + clientName + " has left]");
+		connected=false;
 	}
 }

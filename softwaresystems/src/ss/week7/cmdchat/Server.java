@@ -57,17 +57,16 @@ public class Server {
 
 				Socket sock = servSock.accept();
 				System.out.println("connected to new client");
-				//BufferedWriter out = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
-
-				ClientHandler clientHandler = new ClientHandler(this, sock);
-				//out.write("naampje");
-				//out.newLine();
+				ClientHandler clientHandler = new ClientHandler(this, sock);	
+				addHandler(clientHandler);
+				System.out.println("handler created");
+				
 				clientHandler.announce();
 				Thread clientHandlerThread = new Thread(clientHandler);
 
 				clientHandlerThread.start();
 				System.out.println("handler started");
-				addHandler(clientHandler);
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

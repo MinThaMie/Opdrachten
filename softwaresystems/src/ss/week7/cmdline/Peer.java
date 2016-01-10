@@ -75,7 +75,7 @@ public class Peer implements Runnable {
 			try {
 				this.out.write(toSend);
 				this.out.newLine();
-				out.flush();
+				this.out.flush();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

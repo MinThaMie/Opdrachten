@@ -21,13 +21,19 @@ public class Client extends Thread {
 	private Socket sock;
 	private BufferedReader in;
 	private BufferedWriter out;
+	private boolean connected;
 
 	/**
 	 * Constructs a Client-object and tries to make a socket connection
 	 */
 	public Client(String name, InetAddress host, int port, MessageUI muiArg)
 			throws IOException {
-		// TODO Add implementation
+		this.clientName = name;
+		this.sock = new Socket(host, port);
+		this.in = new BufferedReader(new InputStreamReader(this.sock.getInputStream()));
+		this.out = new BufferedWriter(new OutputStreamWriter(this.sock.getOutputStream()));
+		this.mui=muiArg;
+		connected=true;
 	}
 
 	/**
@@ -35,18 +41,37 @@ public class Client extends Thread {
 	 * Each message will be forwarded to the MessageUI
 	 */
 	public void run() {
-		// TODO Add implementation
+		while (connected) {
+			try {
+				mui.addMessage(in.readLine());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	/** send a message to a ClientHandler. */
 	public void sendMessage(String msg) {
-		// TODO Add implementation
+		try {
+			out.write(msg);
+			out.newLine();
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/** close the socket connection. */
 	public void shutdown() {
 		mui.addMessage("Closing socket connection...");
-		// TODO Add implementation
+		try {
+			sock.close();
+			in.close();
+			out.close();
+			connected = false;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/** returns the client name */

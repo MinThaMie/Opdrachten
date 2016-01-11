@@ -73,6 +73,7 @@ public class Client extends Thread {
 		this.sock = new Socket(host, port);
 		this.in = new BufferedReader(new InputStreamReader(this.sock.getInputStream()));
 		this.out = new BufferedWriter(new OutputStreamWriter(this.sock.getOutputStream()));
+		connected=true;
 	}
 
 	/**

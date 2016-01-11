@@ -14,19 +14,24 @@ import java.net.Socket;
  */
 public class ClientHandler extends Thread {
 
-    private Server server;
+    private ss.week7.challenge.chatbox.Server server;
     private Socket sock;
     private BufferedReader in;
     private BufferedWriter out;
     private String clientName;
+    private boolean connected;
 
     /**
      * Constructs a ClientHandler object
      * Initialises both Data streams.
      *@ requires server != null && sock != null;
      */
-    public ClientHandler(Server serverArg, Socket sockArg) throws IOException {
-        // TODO Add implementation
+    public ClientHandler(ss.week7.challenge.chatbox.Server serverArg, Socket sockArg) throws IOException {
+    	this.server = serverArg;
+    	this.sock=sockArg;
+		this.in = new BufferedReader(new InputStreamReader(sockArg.getInputStream()));
+		this.out = new BufferedWriter(new OutputStreamWriter(sockArg.getOutputStream()));
+		this.connected=true;
     }
 
     /**
@@ -49,7 +54,17 @@ public class ClientHandler extends Thread {
      * broken and shutdown() will be called.
      */
     public void run() {
-        // TODO Add implementation
+    	String text = "";
+		while (connected) {
+			try {
+				text = in.readLine();
+				server.broadcast(clientName+": " + text);
+			} catch (IOException e) {
+				e.printStackTrace();
+				shutdown();
+				break;
+			}
+		}
     }
 
     /**
@@ -59,7 +74,14 @@ public class ClientHandler extends Thread {
      * and shutdown() is called.
      */
     public void sendMessage(String msg) {
-        // TODO Add implementation
+    	try {
+			out.write(msg);
+			out.newLine();
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+			shutdown();
+		}
     }
 
     /**
@@ -68,8 +90,10 @@ public class ClientHandler extends Thread {
      * is no longer participating in the chat.
      */
     private void shutdown() {
-        server.removeHandler(this);
+       server.removeHandler(this);
         server.broadcast("[" + clientName + " has left]");
+        this.sock.close();
+        connected=false;
     }
 
 }

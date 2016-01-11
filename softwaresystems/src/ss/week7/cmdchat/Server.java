@@ -98,7 +98,7 @@ public class Server {
 	 * @param handler
 	 *            ClientHandler that will be added
 	 */
-	public void addHandler(ClientHandler handler) {
+	private void addHandler(ClientHandler handler) {
 		threads.add(handler);
 		System.out.println("handler added");
 	}

@@ -3,8 +3,11 @@ package ss.week7.challenge.chatbox;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Vector;
+
+import ss.week7.cmdchat.ClientHandler;
 
 /**
  * P2 prac wk5. <br>
@@ -21,7 +24,9 @@ public class Server extends Thread {
 
     /** Constructs a new Server object */
     public Server(int portArg, MessageUI muiArg) {
-        // TODO Add implementation
+    	this.port = portArg;
+		this.threads = new ArrayList<ClientHandler>();
+		this.mui=muiArg;
     }
 
     /**
@@ -31,7 +36,33 @@ public class Server extends Thread {
      * communication with the Client.
      */
     public void run() {
-        // TODO Add implementation
+    	System.out.println("server started");
+		ServerSocket servSock = null;
+		try {
+			servSock = new ServerSocket(this.port);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		while (true) {
+			try {
+
+				Socket sock = servSock.accept();
+				System.out.println("connected to new client");
+				ss.week7.challenge.chatbox.ClientHandler clientHandler = new ss.week7.challenge.chatbox.ClientHandler(this,sock);
+				addHandler(clientHandler);
+				System.out.println("handler created");
+				
+				clientHandler.announce();
+				Thread clientHandlerThread = new Thread(clientHandler);
+
+				clientHandlerThread.start();
+				System.out.println("handler started");
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		}
     }
 
     /**
@@ -40,7 +71,10 @@ public class Server extends Thread {
      * @param msg message that is send
      */
     public void broadcast(String msg) {
-        // TODO Add implementation
+    	System.out.println(msg);
+		for (ClientHandler client : threads) {
+			client.sendMessage(msg);
+		}
     }
 
     /**
@@ -48,7 +82,8 @@ public class Server extends Thread {
      * @param handler ClientHandler that will be added
      */
     public void addHandler(ClientHandler handler) {
-        // TODO Add implementation
+    	threads.add(handler);
+		System.out.println("handler added");
     }
 
     /**
@@ -56,7 +91,8 @@ public class Server extends Thread {
      * @param handler ClientHandler that will be removed
      */
     public void removeHandler(ClientHandler handler) {
-        // BODY TO BE ADDED
+    	threads.remove(handler);
+		System.out.println("handler added removed");
     }
 
 }

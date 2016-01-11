@@ -21,6 +21,7 @@ public class Peer implements Runnable {
 	protected Socket sock;
 	protected BufferedReader in;
 	protected BufferedWriter out;
+	private boolean connected;
 
 	/*@
 	   requires (nameArg != null) && (sockArg != null);
@@ -42,7 +43,7 @@ public class Peer implements Runnable {
 		this.sock = sockArg;
 		this.in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
 		this.out = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
-
+connected=true;
 	}
 
 	/**
@@ -50,14 +51,14 @@ public class Peer implements Runnable {
 	 * characters to the default output.
 	 */
 	public void run() {
-		while (true) {
+		while (connected) {
 			try {
 				System.out.println("message: " + in.readLine());
 			} catch (IOException e) {
 				e.printStackTrace();
+				shutDown();
 			}
 		}
-
 	}
 
 	/**
@@ -86,12 +87,10 @@ public class Peer implements Runnable {
 	 * Closes the connection, the sockets will be terminated
 	 */
 	public void shutDown() {
+		System.out.println("doei");
+		connected=false;
 		try {
-			in.close();
-			out.close();
 			this.sock.close();
-			System.exit(0);
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

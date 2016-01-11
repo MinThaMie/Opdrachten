@@ -31,11 +31,13 @@ public class FinegrainedIntCell implements IntCell {
 
 	@Override
 	public int getValue() {
+		int result=0;
 		l.lock();
 		try {
 			while (!unconsumed) {
 				bufferFull.await();
 			}
+			result=this.value;
 			unconsumed = false;
 			bufferEmpty.signal();			
 		} catch (InterruptedException e) {
@@ -44,6 +46,6 @@ public class FinegrainedIntCell implements IntCell {
 			l.unlock();			
 		}
 		//System.out.println(System.currentTimeMillis());
-		return this.value;		
+		return result;		
 	}
 }

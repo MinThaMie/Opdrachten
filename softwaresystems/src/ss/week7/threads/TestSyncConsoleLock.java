@@ -5,10 +5,11 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class TestSyncConsoleLock extends Thread {
 	//-----------------------------Instance Variables
-
+	static final Lock l = new ReentrantLock();
 	//-----------------------------Constructor
 	public TestSyncConsoleLock(String name) {
 		super(name);
+		
 	}
 
 	public static void main(String[] args) {
@@ -19,8 +20,7 @@ public class TestSyncConsoleLock extends Thread {
 	//-----------------------------Queries
 
 	//-----------------------------Commands
-	private void sum() {
-		Lock l = new ReentrantLock();
+	private void sum() {		
 		l.lock();
 		int number1 = SyncConsole.readInt("Thread: " + this.getName() + " input integer 1 ");
 		int number2 = SyncConsole.readInt("Thread: " + this.getName() + " input integer 2 ");

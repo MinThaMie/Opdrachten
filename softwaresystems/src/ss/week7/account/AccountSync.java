@@ -5,7 +5,7 @@ public class AccountSync {
 	static MyThread thread2;
 	static Account acc;
 	static double theAmount = 10;
-	static int theTimes = 1000;
+	static int theTimes = 10000;
 
 	public static void main(String[] args) {
 		acc = new Account();

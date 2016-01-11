@@ -52,9 +52,9 @@ public class Server {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		
 		while (true) {
 			try {
-
 				Socket sock = servSock.accept();
 				System.out.println("connected to new client");
 				ClientHandler clientHandler = new ClientHandler(this, sock);	

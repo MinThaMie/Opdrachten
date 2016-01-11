@@ -6,14 +6,16 @@ import java.util.concurrent.locks.ReentrantLock;
 public class ConcatThread extends Thread {
 	private static String text = ""; // global variable
 	private String toe; // niet static dus deze word nooit overschreven
-	private Lock l = new ReentrantLock();
+	private static Lock l = new ReentrantLock();
 
 	public ConcatThread(String toeArg) {
 		this.toe = toeArg;
 	}
 
-	public synchronized void run() {
+	public void run() {
+		l.lock();
 		text = text.concat(toe);		
+		l.unlock();
 	}
 
 	public static void main(String[] args) {

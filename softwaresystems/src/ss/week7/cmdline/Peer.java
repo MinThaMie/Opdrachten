@@ -36,7 +36,7 @@ public class Peer implements Runnable {
 	 */
 	public Peer(String nameArg, Socket sockArg) throws IOException {
 		if ((nameArg == null) || (sockArg == null)) {
-			System.out.print("name or socket worng");
+			System.out.print("name or socket wrong");
 			System.exit(0);
 		}
 		this.name = nameArg;
